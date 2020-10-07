@@ -31,6 +31,7 @@ public class Magpie
     public String getResponse(String statement)
     {
         String response = "";
+        statement = statement.trim();
         if (statement.indexOf("no") >= 0)
         {
             response = "Why so negative?";
@@ -42,11 +43,38 @@ public class Magpie
         {
             response = "Tell me more about your family.";
         }
+        else if (statement.indexOf("dog") >= 0
+                || statement.indexOf("cat") >= 0
+                || statement.indexOf("gecko") >= 0
+                || statement.indexOf("fish") >= 0)
+        {
+            response = "Tell me more about your pets";
+        }
+        else if (statement.indexOf("nathan") >= 0){
+            response = "He seems like a good teacher";
+        }
+        else if (statement.indexOf("?") >= 0){
+            response = "I'm sorry, I don't know the answer to that.";
+        }
+        else if (statement.indexOf("hungry") >= 0) {
+            response = "I'm hungry too! Tell me about your favorite food.";
+        }
+        else if (statement.indexOf("tired") >= 0){
+            response = "You should probably get more sleep";
+        }
+        else if (statement.indexOf("hello") >= 0){
+            response = "Hello, user!";
+        }
+        else if(statement.length() == 0){
+            response = "Say something, please.";
+        }
         else
         {
             response = getRandomResponse();
         }
+
         return response;
+
     }
     
     /**
@@ -55,7 +83,7 @@ public class Magpie
      */
     public String getRandomResponse()
     {
-        final int NUMBER_OF_RESPONSES = 4;
+        final int NUMBER_OF_RESPONSES = 6;
         double r = Math.random();
         int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
         String response = "";
@@ -76,6 +104,16 @@ public class Magpie
         {
             response = "You don't say.";
         }
+        else if (whichResponse == 4)
+        {
+            response = "Thats odd.";
+        }
+        else if (whichResponse == 5)
+        {
+            response = "I mean, I guess so.";
+        }
+        
+
     
         return response;
     }
