@@ -32,37 +32,40 @@ public class Magpie
     {
         String response = "";
         statement = statement.trim();
-        if (statement.indexOf("no") >= 0)
+        if(findWord(statement, "I want") >= 0){
+            response = transformIWantStatement(statement);
+        }
+        else if(findWord(statement, "I") != -1 && findWord(statement, "I") < findWord(statement, "you")){
+            response = transformIYouStatement(statement);
+        }
+        else if (findWord(statement, "no") >= 0)
         {
             response = "Why so negative?";
         }
-        else if (statement.indexOf("mother") >= 0
-                || statement.indexOf("father") >= 0
-                || statement.indexOf("sister") >= 0
-                || statement.indexOf("brother") >= 0)
+        else if (findWord(statement, "mother") >= 0
+                || findWord(statement, "father") >= 0
+                || findWord(statement, "sister") >= 0
+                || findWord(statement, "brother") >= 0)
         {
             response = "Tell me more about your family.";
         }
-        else if (statement.indexOf("dog") >= 0
-                || statement.indexOf("cat") >= 0
-                || statement.indexOf("gecko") >= 0
-                || statement.indexOf("fish") >= 0)
+        else if (findWord(statement, "dog") >= 0
+                || findWord(statement, "cat") >= 0
+                || findWord(statement, "gecko") >= 0
+                || findWord(statement, "fish") >= 0)
         {
             response = "Tell me more about your pets";
         }
-        else if (statement.indexOf("nathan") >= 0){
+        else if (findWord(statement, "nathan") >= 0){
             response = "He seems like a good teacher";
         }
-        else if (statement.indexOf("?") >= 0){
-            response = "I'm sorry, I don't know the answer to that.";
-        }
-        else if (statement.indexOf("hungry") >= 0) {
+        else if (findWord(statement, "hungry") >= 0) {
             response = "I'm hungry too! Tell me about your favorite food.";
         }
-        else if (statement.indexOf("tired") >= 0){
+        else if (findWord(statement, "tired") >= 0){
             response = "You should probably get more sleep";
         }
-        else if (statement.indexOf("hello") >= 0){
+        else if (findWord(statement, "hello") >= 0){
             response = "Hello, user!";
         }
         else if(statement.length() == 0){
@@ -160,8 +163,14 @@ public class Magpie
      */
     public String transformIWantStatement(String statement)
     {
-        //your code here
-        return "";
+        int length = statement.length();
+  
+        int index = findWord(statement, "I want");
+        String something = "";
+        for (int i = index + 7; i < length; i++){
+            something += statement.charAt(i);
+        }
+        return "Would you really be happy if you had " + something + "?";
     }
 
     /**
@@ -172,8 +181,14 @@ public class Magpie
      */
     public String transformIYouStatement(String statement)
     {
-        //your code here
-        return "";
+        int end = findWord(statement, "you");
+        int start = findWord(statement, "I");
+        String middle = "";
+
+        for (int i = start + 2; i < end; i++){
+            middle += statement.charAt(i);
+        }
+        return "Why do you " + middle + "me?";
     }
 
     /**
