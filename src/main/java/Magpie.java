@@ -32,11 +32,17 @@ public class Magpie
     {
         String response = "";
         statement = statement.trim();
-        if(findWord(statement, "I want") >= 0){
+        if(findWord(statement, "I want to") >= 0){
+            response = transformIWantToStatement(statement);
+        }
+        else if(findWord(statement, "I want") >= 0){
             response = transformIWantStatement(statement);
         }
         else if(findWord(statement, "I") != -1 && findWord(statement, "I") < findWord(statement, "you")){
             response = transformIYouStatement(statement);
+        }
+        else if(findWord(statement, "I") != -1 && findWord(statement, "you") < findWord(statement, "me")){
+            response = transformYouMeStatement(statement);
         }
         else if (findWord(statement, "no") >= 0)
         {
@@ -199,8 +205,13 @@ public class Magpie
      */
     public String transformIWantToStatement(String statement)
     {
-        // your code here
-        return "";
+        int start = findWord(statement, "I want to") + 9;
+        int length = statement.length();
+        String something = "";
+        for (int i = start; i < length; i++){
+            something += statement.charAt(i);
+        }
+        return "What would it mean to" + something + "?";
     }
 
 
@@ -214,7 +225,13 @@ public class Magpie
      */
     public String transformYouMeStatement(String statement)
     {
-        // your code here
-        return "";
+        int end = findWord(statement, "me");
+        int start = findWord(statement, "you");
+        String middle = "";
+
+        for (int i = start + 4; i < end; i++){
+            middle += statement.charAt(i);
+        }
+        return "What makes you think that I " + middle + "you?";
     }
 }
